@@ -1,6 +1,10 @@
 import streamlit as st
 from textwrap import dedent
 
+
+# =========================================================
+# PAGE CONFIG
+# =========================================================
 st.set_page_config(
     page_title="Portal Dashboard CIDB",
     page_icon="📊",
@@ -8,12 +12,20 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
+
+# =========================================================
+# DASHBOARD CONFIG
+# Tambah dashboard baru di sini sahaja.
+# =========================================================
 DASHBOARDS = [
     {
         "title": "Prestasi Program",
         "category": "Prestasi Fizikal",
         "icon": "🚦",
-        "description": "Pemantauan pencapaian fizikal program mengikut sektor, bahagian dan status traffic light.",
+        "description": (
+            "Pemantauan pencapaian fizikal program mengikut sektor, "
+            "bahagian dan status traffic light."
+        ),
         "url": "https://prestasiprogram.streamlit.app/",
         "accent": "#16a34a",
         "accent_soft": "rgba(34, 197, 94, 0.14)",
@@ -23,7 +35,10 @@ DASHBOARDS = [
         "title": "Dashboard JPKA",
         "category": "Kewangan & Akaun",
         "icon": "💰",
-        "description": "Prestasi perbelanjaan, hasil, geran, P&L, Balance Sheet dan Cash Flow CIDB.",
+        "description": (
+            "Prestasi perbelanjaan, hasil, geran, P&L, "
+            "Balance Sheet dan Cash Flow CIDB."
+        ),
         "url": "https://jpka-cidb520.streamlit.app/",
         "accent": "#2563eb",
         "accent_soft": "rgba(37, 99, 235, 0.14)",
@@ -33,7 +48,10 @@ DASHBOARDS = [
         "title": "e-Filing Baucar CIDB",
         "category": "Pengurusan Dokumen",
         "icon": "📁",
-        "description": "Carian, semakan dan pengurusan rekod e-Filing baucar CIDB secara dalam talian.",
+        "description": (
+            "Carian, semakan dan pengurusan rekod "
+            "e-Filing baucar CIDB secara dalam talian."
+        ),
         "url": "https://e-filing-baucar-cidb.streamlit.app/",
         "accent": "#7c3aed",
         "accent_soft": "rgba(124, 58, 237, 0.14)",
@@ -41,11 +59,20 @@ DASHBOARDS = [
     },
 ]
 
+
+# =========================================================
+# GLOBAL CSS
+# =========================================================
 st.markdown(
     """
     <style>
-    #MainMenu, footer, [data-testid="stToolbar"], [data-testid="stDecoration"],
-    [data-testid="stStatusWidget"], section[data-testid="stSidebar"] {
+    #MainMenu,
+    footer,
+    [data-testid="stToolbar"],
+    [data-testid="stDecoration"],
+    [data-testid="stStatusWidget"],
+    [data-testid="collapsedControl"],
+    section[data-testid="stSidebar"] {
         display: none !important;
     }
 
@@ -55,44 +82,58 @@ st.markdown(
         background: transparent !important;
     }
 
-    html, body, [data-testid="stAppViewContainer"], .stApp {
+    html,
+    body,
+    [data-testid="stAppViewContainer"],
+    .stApp {
         min-height: 100vh !important;
     }
 
     .stApp {
         background:
-            radial-gradient(circle at 8% 10%, rgba(191,219,254,.55), transparent 29%),
-            radial-gradient(circle at 91% 12%, rgba(221,214,254,.48), transparent 30%),
-            radial-gradient(circle at 50% 100%, rgba(219,234,254,.55), transparent 44%),
-            linear-gradient(135deg, #f8fafc 0%, #eef4ff 48%, #f8fafc 100%) !important;
+            radial-gradient(
+                circle at 8% 10%,
+                rgba(191, 219, 254, 0.50) 0%,
+                transparent 30%
+            ),
+            radial-gradient(
+                circle at 92% 12%,
+                rgba(221, 214, 254, 0.45) 0%,
+                transparent 30%
+            ),
+            linear-gradient(
+                135deg,
+                #f8fafc 0%,
+                #eef4ff 50%,
+                #f8fafc 100%
+            ) !important;
         background-attachment: fixed !important;
     }
 
     .block-container {
-        width: 100% !important;
-        max-width: 1500px !important;
-        padding: .55rem 2rem .45rem !important;
-        margin: 0 auto !important;
+        max-width: 1450px !important;
+        padding-top: 0.8rem !important;
+        padding-bottom: 0.5rem !important;
+        padding-left: 2rem !important;
+        padding-right: 2rem !important;
     }
 
-    .portal-shell {
-        min-height: calc(100vh - 1rem);
-        display: flex;
-        flex-direction: column;
-        padding: 16px 20px 9px;
-        border-radius: 28px;
-        background: linear-gradient(135deg, rgba(255,255,255,.80), rgba(248,250,252,.60));
-        border: 1px solid rgba(255,255,255,.90);
-        box-shadow: 0 22px 60px rgba(15,23,42,.11), inset 0 1px 0 rgba(255,255,255,.95);
-        backdrop-filter: blur(18px);
-    }
-
+    /* Header */
     .portal-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        gap: 18px;
-        padding: 3px 5px 11px;
+        gap: 16px;
+        padding: 12px 16px;
+        margin-bottom: 12px;
+        border-radius: 24px;
+        background: rgba(255,255,255,0.68);
+        border: 1px solid rgba(255,255,255,0.86);
+        box-shadow:
+            0 16px 38px rgba(15,23,42,0.09),
+            inset 0 1px 0 rgba(255,255,255,0.95);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
     }
 
     .brand-wrap {
@@ -107,24 +148,36 @@ st.markdown(
         display: flex;
         align-items: center;
         justify-content: center;
+        flex-shrink: 0;
         border-radius: 15px;
         font-size: 25px;
-        background: linear-gradient(145deg, rgba(255,255,255,.96), rgba(219,234,254,.90));
-        border: 1px solid rgba(255,255,255,.95);
-        box-shadow: 0 10px 24px rgba(37,99,235,.16);
+        background:
+            linear-gradient(
+                145deg,
+                rgba(255,255,255,0.96),
+                rgba(219,234,254,0.92)
+            );
+        box-shadow:
+            0 10px 22px rgba(37,99,235,0.14),
+            inset 0 1px 0 rgba(255,255,255,0.98);
     }
 
     .brand-title {
         margin: 0;
         color: #172033;
-        font: 900 clamp(21px, 2vw, 29px)/1.05 Arial, sans-serif;
-        letter-spacing: -.6px;
+        font-family: Arial, sans-serif;
+        font-size: clamp(22px, 2vw, 29px);
+        font-weight: 900;
+        letter-spacing: -0.5px;
+        line-height: 1.05;
     }
 
     .brand-subtitle {
-        margin-top: 4px;
+        margin-top: 3px;
         color: #64748b;
-        font: 600 12px Arial, sans-serif;
+        font-family: Arial, sans-serif;
+        font-size: 11px;
+        font-weight: 600;
     }
 
     .dashboard-count {
@@ -134,52 +187,50 @@ st.markdown(
         padding: 8px 13px;
         border-radius: 999px;
         color: #334155;
-        font: 800 12px Arial, sans-serif;
-        background: rgba(255,255,255,.66);
-        border: 1px solid rgba(203,213,225,.72);
-        box-shadow: 0 8px 20px rgba(15,23,42,.07);
+        font-family: Arial, sans-serif;
+        font-size: 11px;
+        font-weight: 800;
+        background: rgba(255,255,255,0.72);
+        border: 1px solid rgba(203,213,225,0.72);
     }
 
     .count-dot {
-        width: 9px;
-        height: 9px;
+        width: 8px;
+        height: 8px;
         border-radius: 50%;
         background: #22c55e;
-        box-shadow: 0 0 0 4px rgba(34,197,94,.13), 0 0 12px rgba(34,197,94,.55);
-    }
-
-    .intro-line {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin: 0 5px 12px;
-    }
-
-    .intro-line::before, .intro-line::after {
-        content: "";
-        height: 1px;
-        flex: 1;
-        background: linear-gradient(90deg, transparent, rgba(148,163,184,.42), transparent);
+        box-shadow:
+            0 0 0 4px rgba(34,197,94,0.12),
+            0 0 12px rgba(34,197,94,0.52);
     }
 
     .intro-text {
-        color: #64748b;
-        font: 700 11px Arial, sans-serif;
+        margin: 0 0 12px 0;
         text-align: center;
-        white-space: nowrap;
+        color: #64748b;
+        font-family: Arial, sans-serif;
+        font-size: 11px;
+        font-weight: 700;
     }
 
-    .dashboard-grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 17px;
-        flex: 1;
-        align-items: stretch;
+    /* Column spacing */
+    div[data-testid="stHorizontalBlock"] {
+        gap: 1rem !important;
+        align-items: stretch !important;
     }
 
+    div[data-testid="column"] {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    div[data-testid="column"] > div {
+        height: 100% !important;
+    }
+
+    /* Clickable card */
     .dashboard-link {
         display: block;
-        min-width: 0;
         height: 100%;
         text-decoration: none !important;
         color: inherit !important;
@@ -187,33 +238,48 @@ st.markdown(
     }
 
     .dashboard-card {
+        --accent: #2563eb;
+        --accent-soft: rgba(37,99,235,0.14);
+
         position: relative;
+        min-height: 285px;
         height: 100%;
-        min-height: 290px;
         display: flex;
         flex-direction: column;
-        padding: 21px;
         overflow: hidden;
+        padding: 21px;
         border-radius: 24px;
-        background: linear-gradient(145deg, rgba(255,255,255,.92), rgba(248,250,252,.72));
-        border: 1px solid rgba(203,213,225,.76);
-        box-shadow: 0 15px 34px rgba(15,23,42,.10), inset 0 1px 0 rgba(255,255,255,.98);
+        background:
+            linear-gradient(
+                145deg,
+                rgba(255,255,255,0.91),
+                rgba(248,250,252,0.73)
+            );
+        border: 1px solid rgba(203,213,225,0.74);
+        box-shadow:
+            0 15px 34px rgba(15,23,42,0.10),
+            inset 0 1px 0 rgba(255,255,255,0.98);
         backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
         cursor: pointer;
-        transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+        transition:
+            transform 0.22s ease,
+            box-shadow 0.22s ease,
+            border-color 0.22s ease;
     }
 
     .dashboard-card::before {
         content: "";
         position: absolute;
-        top: -85px;
-        right: -75px;
-        width: 190px;
-        height: 190px;
+        top: -82px;
+        right: -72px;
+        width: 180px;
+        height: 180px;
         border-radius: 50%;
         background: var(--accent-soft);
-        filter: blur(4px);
-        transition: transform .28s ease;
+        transition:
+            transform 0.25s ease,
+            opacity 0.25s ease;
     }
 
     .dashboard-card::after {
@@ -223,74 +289,106 @@ st.markdown(
         bottom: 0;
         width: 100%;
         height: 5px;
-        background: linear-gradient(90deg, transparent, var(--accent), transparent);
-        opacity: .76;
+        background:
+            linear-gradient(
+                90deg,
+                transparent,
+                var(--accent),
+                transparent
+            );
+        opacity: 0.78;
     }
 
     .dashboard-link:hover .dashboard-card {
         transform: translateY(-7px) scale(1.012);
         border-color: var(--accent);
-        box-shadow: 0 26px 52px rgba(15,23,42,.16), 0 0 0 3px var(--accent-soft);
+        box-shadow:
+            0 26px 52px rgba(15,23,42,0.16),
+            0 0 0 3px var(--accent-soft),
+            inset 0 1px 0 rgba(255,255,255,0.98);
     }
 
     .dashboard-link:hover .dashboard-card::before {
         transform: scale(1.18);
     }
 
+    .dashboard-link:focus-visible .dashboard-card {
+        outline: 3px solid var(--accent);
+        outline-offset: 4px;
+    }
+
     .card-top {
         display: flex;
-        align-items: flex-start;
         justify-content: space-between;
-        gap: 16px;
+        align-items: flex-start;
+        gap: 14px;
         position: relative;
         z-index: 2;
     }
 
     .card-icon {
-        width: 56px;
-        height: 56px;
+        width: 55px;
+        height: 55px;
         display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: 18px;
-        font-size: 30px;
-        background: linear-gradient(145deg, rgba(255,255,255,.94), var(--accent-soft));
-        border: 1px solid rgba(255,255,255,.96);
-        box-shadow: 0 12px 27px var(--accent-soft);
+        flex-shrink: 0;
+        border-radius: 17px;
+        font-size: 29px;
+        background:
+            linear-gradient(
+                145deg,
+                rgba(255,255,255,0.95),
+                var(--accent-soft)
+            );
+        border: 1px solid rgba(255,255,255,0.96);
+        box-shadow:
+            0 11px 24px var(--accent-soft),
+            inset 0 1px 0 rgba(255,255,255,0.98);
     }
 
     .card-number {
-        color: rgba(100,116,139,.30);
-        font: 900 33px/1 Arial, sans-serif;
-        letter-spacing: -1px;
+        color: rgba(100,116,139,0.30);
+        font-family: Arial, sans-serif;
+        font-size: 32px;
+        font-weight: 900;
+        line-height: 1;
     }
 
     .card-category {
         width: fit-content;
-        margin-top: 19px;
-        padding: 6px 11px;
+        margin-top: 18px;
+        padding: 6px 10px;
         border-radius: 999px;
         color: var(--accent);
-        font: 900 10px Arial, sans-serif;
-        text-transform: uppercase;
-        letter-spacing: .65px;
         background: var(--accent-soft);
+        font-family: Arial, sans-serif;
+        font-size: 10px;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
         position: relative;
         z-index: 2;
     }
 
     .card-title {
-        margin: 13px 0 8px;
+        margin: 13px 0 8px 0;
         color: #1e293b;
-        font: 900 clamp(18px, 1.55vw, 24px)/1.14 Arial, sans-serif;
-        letter-spacing: -.35px;
+        font-family: Arial, sans-serif;
+        font-size: clamp(18px, 1.45vw, 23px);
+        font-weight: 900;
+        letter-spacing: -0.3px;
+        line-height: 1.14;
         position: relative;
         z-index: 2;
     }
 
     .card-description {
         color: #64748b;
-        font: 500 13px/1.5 Arial, sans-serif;
+        font-family: Arial, sans-serif;
+        font-size: 12.5px;
+        font-weight: 500;
+        line-height: 1.5;
         position: relative;
         z-index: 2;
     }
@@ -299,8 +397,8 @@ st.markdown(
         margin-top: auto;
         padding-top: 18px;
         display: flex;
-        align-items: center;
         justify-content: space-between;
+        align-items: center;
         gap: 10px;
         position: relative;
         z-index: 2;
@@ -308,73 +406,128 @@ st.markdown(
 
     .open-label {
         color: var(--accent);
-        font: 900 12px Arial, sans-serif;
+        font-family: Arial, sans-serif;
+        font-size: 11.5px;
+        font-weight: 900;
     }
 
     .open-arrow {
-        width: 35px;
-        height: 35px;
+        width: 34px;
+        height: 34px;
         display: flex;
         align-items: center;
         justify-content: center;
+        flex-shrink: 0;
         border-radius: 50%;
-        color: white;
-        font: 900 19px Arial, sans-serif;
+        color: #ffffff;
         background: var(--accent);
-        box-shadow: 0 9px 19px var(--accent-soft);
-        transition: transform .20s ease;
+        font-family: Arial, sans-serif;
+        font-size: 18px;
+        font-weight: 900;
+        box-shadow: 0 9px 18px var(--accent-soft);
+        transition: transform 0.20s ease;
     }
 
     .dashboard-link:hover .open-arrow {
-        transform: translateX(4px) rotate(-4deg);
+        transform: translateX(4px);
     }
 
-    .portal-footer {
+    .portal-footer-custom {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        gap: 20px;
-        padding: 11px 5px 1px;
+        gap: 15px;
+        margin-top: 11px;
+        padding: 8px 3px 0 3px;
         color: #94a3b8;
-        font: 700 10px Arial, sans-serif;
+        font-family: Arial, sans-serif;
+        font-size: 10px;
+        font-weight: 700;
     }
 
-    .footer-right { text-align: right; }
+    @media (max-width: 900px) {
+        .block-container {
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+        }
 
-    @media (max-width: 820px) {
-        .dashboard-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-        .dashboard-count { display: none; }
-        .portal-shell { min-height: auto; }
+        .dashboard-card {
+            min-height: 265px;
+            padding: 18px;
+        }
+
+        .dashboard-count {
+            display: none;
+        }
     }
 
-    @media (max-width: 560px) {
-        .block-container { padding: .4rem .55rem !important; }
-        .portal-shell { padding: 13px; border-radius: 21px; }
-        .dashboard-grid { grid-template-columns: 1fr; }
-        .dashboard-card { min-height: 245px; }
-        .brand-title { font-size: 20px; }
-        .brand-subtitle { font-size: 10px; }
-        .intro-text { white-space: normal; }
-        .portal-footer { flex-direction: column; gap: 4px; text-align: center; }
-        .footer-right { text-align: center; }
+    @media (max-width: 700px) {
+        .portal-header {
+            align-items: flex-start;
+        }
+
+        .brand-title {
+            font-size: 20px;
+        }
+
+        .brand-subtitle {
+            font-size: 10px;
+        }
+
+        .portal-footer-custom {
+            flex-direction: column;
+            text-align: center;
+            gap: 3px;
+        }
     }
 
-    @media (min-width: 821px) and (max-height: 780px) {
-        .block-container { padding-top: .3rem !important; padding-bottom: .25rem !important; }
-        .portal-shell { min-height: calc(100vh - .6rem); padding-top: 11px; padding-bottom: 6px; }
-        .portal-header { padding-bottom: 7px; }
-        .brand-icon { width: 42px; height: 42px; font-size: 22px; }
-        .brand-title { font-size: 22px; }
-        .brand-subtitle { font-size: 10px; }
-        .intro-line { margin-bottom: 8px; }
-        .dashboard-card { min-height: 240px; padding: 17px; }
-        .card-icon { width: 47px; height: 47px; font-size: 25px; }
-        .card-number { font-size: 28px; }
-        .card-category { margin-top: 13px; }
-        .card-title { margin-top: 9px; font-size: 18px; }
-        .card-description { font-size: 12px; line-height: 1.42; }
-        .card-footer { padding-top: 12px; }
-        .portal-footer { padding-top: 7px; }
+    @media (min-width: 901px) and (max-height: 760px) {
+        .block-container {
+            padding-top: 0.4rem !important;
+        }
+
+        .portal-header {
+            padding-top: 9px;
+            padding-bottom: 9px;
+        }
+
+        .brand-icon {
+            width: 42px;
+            height: 42px;
+            font-size: 22px;
+        }
+
+        .brand-title {
+            font-size: 23px;
+        }
+
+        .dashboard-card {
+            min-height: 235px;
+            padding: 17px;
+        }
+
+        .card-icon {
+            width: 47px;
+            height: 47px;
+            font-size: 24px;
+        }
+
+        .card-category {
+            margin-top: 12px;
+        }
+
+        .card-title {
+            margin-top: 9px;
+            font-size: 18px;
+        }
+
+        .card-description {
+            font-size: 11.5px;
+        }
+
+        .card-footer {
+            padding-top: 11px;
+        }
     }
     </style>
     """,
@@ -382,7 +535,11 @@ st.markdown(
 )
 
 
-def build_dashboard_card(dashboard: dict) -> str:
+# =========================================================
+# HELPER
+# =========================================================
+def build_card_html(dashboard: dict) -> str:
+    """Bina satu clickable dashboard card."""
     return dedent(
         f"""
         <a
@@ -392,42 +549,60 @@ def build_dashboard_card(dashboard: dict) -> str:
             rel="noopener noreferrer"
             aria-label="Buka {dashboard['title']}"
         >
-            <article
+            <div
                 class="dashboard-card"
-                style="--accent:{dashboard['accent']}; --accent-soft:{dashboard['accent_soft']};"
+                style="
+                    --accent: {dashboard['accent']};
+                    --accent-soft: {dashboard['accent_soft']};
+                "
             >
                 <div class="card-top">
                     <div class="card-icon">{dashboard['icon']}</div>
                     <div class="card-number">{dashboard['number']}</div>
                 </div>
 
-                <div class="card-category">{dashboard['category']}</div>
-                <h2 class="card-title">{dashboard['title']}</h2>
-                <div class="card-description">{dashboard['description']}</div>
+                <div class="card-category">
+                    {dashboard['category']}
+                </div>
+
+                <div class="card-title">
+                    {dashboard['title']}
+                </div>
+
+                <div class="card-description">
+                    {dashboard['description']}
+                </div>
 
                 <div class="card-footer">
-                    <div class="open-label">Klik untuk buka dashboard</div>
-                    <div class="open-arrow">→</div>
+                    <div class="open-label">
+                        Klik untuk buka dashboard
+                    </div>
+
+                    <div class="open-arrow">
+                        →
+                    </div>
                 </div>
-            </article>
+            </div>
         </a>
         """
     ).strip()
 
 
-dashboard_cards_html = "\n".join(
-    build_dashboard_card(dashboard)
-    for dashboard in DASHBOARDS
-)
-
-portal_html = dedent(
-    f"""
-    <div class="portal-shell">
-        <header class="portal-header">
+# =========================================================
+# HEADER
+# =========================================================
+st.markdown(
+    dedent(
+        f"""
+        <div class="portal-header">
             <div class="brand-wrap">
                 <div class="brand-icon">📊</div>
+
                 <div>
-                    <h1 class="brand-title">PORTAL DASHBOARD CIDB</h1>
+                    <div class="brand-title">
+                        PORTAL DASHBOARD CIDB
+                    </div>
+
                     <div class="brand-subtitle">
                         Pusat Akses Dashboard Bahagian Kewangan &amp; Akaun
                     </div>
@@ -438,22 +613,42 @@ portal_html = dedent(
                 <span class="count-dot"></span>
                 {len(DASHBOARDS)} Dashboard Aktif
             </div>
-        </header>
-
-        <div class="intro-line">
-            <div class="intro-text">Pilih dashboard untuk membuka paparan berkaitan</div>
         </div>
+        """
+    ).strip(),
+    unsafe_allow_html=True,
+)
 
-        <main class="dashboard-grid">
-            {dashboard_cards_html}
-        </main>
+st.markdown(
+    '<div class="intro-text">Pilih dashboard untuk membuka paparan berkaitan</div>',
+    unsafe_allow_html=True,
+)
 
-        <footer class="portal-footer">
+
+# =========================================================
+# DASHBOARD CARDS
+# =========================================================
+columns = st.columns(len(DASHBOARDS), gap="large")
+
+for column, dashboard in zip(columns, DASHBOARDS):
+    with column:
+        st.markdown(
+            build_card_html(dashboard),
+            unsafe_allow_html=True,
+        )
+
+
+# =========================================================
+# FOOTER
+# =========================================================
+st.markdown(
+    dedent(
+        """
+        <div class="portal-footer-custom">
             <div>Bahagian Kewangan &amp; Akaun</div>
-            <div class="footer-right">CIDB Malaysia • Portal Dashboard Dalaman</div>
-        </footer>
-    </div>
-    """
-).strip()
-
-st.markdown(portal_html, unsafe_allow_html=True)
+            <div>CIDB Malaysia • Portal Dashboard Dalaman</div>
+        </div>
+        """
+    ).strip(),
+    unsafe_allow_html=True,
+)
